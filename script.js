@@ -1,4 +1,4 @@
-const PRECISION = 4;
+const PRECISION = 3;
 
 const targetSecondsInput = document.getElementById('target-seconds');
 const timerDisplay = document.getElementById('timer-display');
@@ -20,6 +20,7 @@ startBtn.addEventListener('click', () => {
   isRunning = true;
   startTime = Date.now();
 
+  // 表示を0.000で初期化（3桁）
   timerDisplay.textContent = (0).toFixed(PRECISION);
   resultDisplay.innerHTML = '';
   startBtn.disabled = true;
@@ -27,9 +28,9 @@ startBtn.addEventListener('click', () => {
   targetSecondsInput.disabled = true;
 
   timerInterval = setInterval(() => {
-    const elapsedTime = (Date.now() - startTime) / 1000;  // ここを修正！
+    const elapsedTime = (Date.now() - startTime) / 1000;
     timerDisplay.textContent = elapsedTime.toFixed(PRECISION);
-  }, 10); // 1msはオーバーヘッド大きいので10msくらいで十分です
+  }, 10); // 10msごとに更新
 });
 
 stopBtn.addEventListener('click', () => {
@@ -45,13 +46,13 @@ stopBtn.addEventListener('click', () => {
   const diff = Math.abs(elapsedTime - targetSeconds);
 
   let message = '';
-  if (diff <= 0.0050) {
+  if (diff <= 0.005) {
     message = '🎉 神の領域！ 🎉';
-  } else if (diff <= 0.0250) {
+  } else if (diff <= 0.025) {
     message = '🤩 すごい！ほぼ完璧！ 🤩';
-  } else if (diff <= 0.0800) {
+  } else if (diff <= 0.08) {
     message = '👍 おしい！あと少し！ 👍';
-  } else if (diff <= 0.4000) {
+  } else if (diff <= 0.4) {
     message = '🙂 もうちょっと！ 🙂';
   } else {
     message = '😅 残念！再挑戦しよう！ 😅';
